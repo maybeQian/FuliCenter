@@ -2,10 +2,8 @@ package cn.ucai.fulicenter.model.bean;
 
 import java.io.Serializable;
 
-/**
- * Created by Administrator on 2017/1/9 0009.
- */
 public class AlbumsBean implements Serializable {
+
     private int pid;
     private int imgId;
     private String imgUrl;
@@ -52,5 +50,4 @@ public class AlbumsBean implements Serializable {
                 ", thumbUrl='" + thumbUrl + '\'' +
                 '}';
     }
-
 }

@@ -3,8 +3,6 @@ package cn.ucai.fulicenter.model.bean;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import cn.ucai.fulicenter.model.bean.PropertiesBean;
-
 public class GoodsDetailsBean implements Serializable {
 
     private int id;

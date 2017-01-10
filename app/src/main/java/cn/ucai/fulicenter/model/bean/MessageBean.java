@@ -1,8 +1,6 @@
 package cn.ucai.fulicenter.model.bean;
 
-import java.io.Serializable;
-
-public class MessageBean implements Serializable{
+public class MessageBean {
 
     /**
      * success : true
