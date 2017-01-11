@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivBoutique"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:src="@drawable/nopic"
+        android:scaleType="fitXY"
+        />
+    <LinearLayout
+        android:layout_toRightOf="@id/ivBoutique"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不一样的新妆，不一样的美丽"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拯救头发，美丽新妆"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快速增长修护预防脱发洗发水让头发健康快速生长更美丽"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            />
+    </LinearLayout>
+</RelativeLayout>

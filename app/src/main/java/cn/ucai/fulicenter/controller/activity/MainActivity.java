@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.controller.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,11 +10,13 @@ import android.widget.RadioButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.controller.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.controller.fragment.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
     int index, currentIndex;
     RadioButton[] rbs = new RadioButton[5];
+    Fragment[] fragments=new Fragment[5];
     @BindView(R.id.rbNewGoods)
     RadioButton mrbNewGoods;
     @BindView(R.id.rbBoutique)
@@ -39,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
         rbs[2] = mrbCategory;
         rbs[3] = mrbCart;
         rbs[4] = mrbPersonal;
+
+        fragments[0]=new NewGoodsFragment();
+        fragments[1]=new BoutiqueFragment();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.layout_content,fragments[0]).show(fragments[0]).commit();
     }
 
     public void onCheckedChange(View view) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (view.getId()) {
             case R.id.rbNewGoods:
-                ft.replace(R.id.layout_content,new NewGoodsFragment()).commit();
                 index = 0;
                 break;
             case R.id.rbBoutique:
@@ -62,8 +69,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         if (index != currentIndex) {
+            setFragment();
             setRadioStatus();
         }
+    }
+
+    private void setFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = fragments[index];
+        if (!fragment.isAdded()) {
+            ft.add(R.id.layout_content, fragment);
+        }
+        ft.show(fragment).hide(fragments[currentIndex]).commit();
     }
 
     private void setRadioStatus() {
