@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.adapter.NewGoodsAdapter;
+import cn.ucai.fulicenter.model.bean.BoutiqueBean;
 import cn.ucai.fulicenter.model.bean.NewGoodsBean;
 import cn.ucai.fulicenter.model.net.IModelNewGoods;
 import cn.ucai.fulicenter.model.net.ModelNewGoods;
@@ -103,7 +104,8 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void downloadData(final int action, int pageId) {
-        mModel.downData(getContext(), I.CAT_ID, pageId, new OnCompleteListener<NewGoodsBean[]>() {
+        int catId=getActivity().getIntent().getIntExtra("id",I.CAT_ID);
+        mModel.downData(getContext(), catId, pageId, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mAdapter.setMore(result!=null && result.length>0);
@@ -151,6 +153,16 @@ public class NewGoodsFragment extends Fragment {
         mrvGoods.setLayoutManager(mLayoutManager);
         mrvGoods.setHasFixedSize(true);
         mrvGoods.addItemDecoration(new SpaceItemDecoration(30));
+
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == mAdapter.getItemCount() - 1) {
+                    return I.COLUM_NUM;
+                }
+                return 1;
+            }
+        });
     }
 
 }
