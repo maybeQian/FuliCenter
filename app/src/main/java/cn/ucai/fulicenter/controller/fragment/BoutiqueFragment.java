@@ -44,7 +44,6 @@ public class BoutiqueFragment extends Fragment {
     ArrayList<BoutiqueBean> mList;
     LinearLayoutManager mLayoutManager;
     IModelBoutique mModel;
-    int mPageId;
     public BoutiqueFragment() {
     }
 
@@ -70,29 +69,20 @@ public class BoutiqueFragment extends Fragment {
             public void onRefresh() {
                 mSrl.setRefreshing(true);
                 mtvRefreshHint.setVisibility(View.VISIBLE);
-                mPageId=1;
-                downloadData(I.ACTION_PULL_DOWN,mPageId);
+                downloadData(I.ACTION_PULL_DOWN);
             }
         });
     }
 
     private void initData() {
         mModel=new ModelBoutique();
-        mPageId=1;
-        downloadData(I.ACTION_DOWNLOAD,mPageId);
+        downloadData(I.ACTION_DOWNLOAD);
     }
 
-    private void downloadData(final int action, int mPageId) {
+    private void downloadData(final int action) {
         mModel.downData(getContext(), new OnCompleteListener<BoutiqueBean[]>() {
             @Override
             public void onSuccess(BoutiqueBean[] result) {
-//                mAdapter.setMore(result != null && result.length > 0);
-//                if (!mAdapter.isMore()) {
-//                    if (action == I.ACTION_PULL_UP) {
-//                        mAdapter.setFooter("没有更多数据...");
-//                    }
-//                    return;
-//                }
                 mAdapter.setFooter("没有更多数据...");
                 ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
                 switch (action) {
@@ -129,7 +119,7 @@ public class BoutiqueFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mrvBoutique.setLayoutManager(mLayoutManager);
         mrvBoutique.setHasFixedSize(true);
-        mrvBoutique.addItemDecoration(new SpaceItemDecoration(20));
+        mrvBoutique.addItemDecoration(new SpaceItemDecoration(15));
     }
 
 }

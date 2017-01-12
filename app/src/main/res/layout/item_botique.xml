@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,7 +10,9 @@
         android:layout_height="200dp"
         android:src="@drawable/nopic"
         android:scaleType="fitXY"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <LinearLayout
         android:layout_toRightOf="@id/ivBoutique"
         android:orientation="vertical"
@@ -40,4 +43,6 @@
             android:padding="15dp"
             />
     </LinearLayout>
+
+
 </RelativeLayout>

@@ -27,7 +27,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     Context mContext;
     ArrayList<BoutiqueBean> mList;
     String footer;
-    boolean isMore;
 
     public String getFooter() {
         return footer;
@@ -35,15 +34,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     public void setFooter(String footer) {
         this.footer = footer;
-        notifyDataSetChanged();
-    }
-
-    public boolean isMore() {
-        return isMore;
-    }
-
-    public void setMore(boolean more) {
-        isMore = more;
         notifyDataSetChanged();
     }
 
