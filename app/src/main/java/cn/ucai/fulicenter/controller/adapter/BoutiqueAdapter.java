@@ -18,6 +18,7 @@ import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.model.bean.BoutiqueBean;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
+import cn.ucai.fulicenter.view.MFGT;
 
 /**
  * Created by Administrator on 2017/1/11 0011.
@@ -30,7 +31,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     ArrayList<BoutiqueBean> mList;
     String footer;
 
-    View.OnClickListener onItemCLickListener;
 
     public String getFooter() {
         return footer;
@@ -46,17 +46,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         this.mContext = mContext;
         this.mList = list;
 
-        onItemCLickListener=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = (int) v.getTag(R.id.tvDescription);
-                String title= (String) v.getTag(R.id.tvBoutiqueTitle);
-                Intent intent=new Intent(mContext, BoutiqueChildActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("title",title);
-                mContext.startActivity(intent);
-            }
-        };
     }
 
     @Override
@@ -66,7 +55,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         switch (viewType) {
             case TYPE_GOODS:
                 layout = inflater.inflate(R.layout.item_botique, null);
-                layout.setOnClickListener(onItemCLickListener);
                 return new BoutiqueViewHolder(layout);
             case TYPE_FOOTER:
                 layout = inflater.inflate(R.layout.item_footer, null);
@@ -83,12 +71,16 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
             return;
         }
         BoutiqueViewHolder holder = (BoutiqueViewHolder) parentHolder;
-        BoutiqueBean boutiqueBean = mList.get(position);
+        final BoutiqueBean boutiqueBean = mList.get(position);
         holder.tvTitle.setText(boutiqueBean.getTitle());
         holder.tvName.setText(boutiqueBean.getName());
         holder.tvDescription.setText(boutiqueBean.getDescription());
-        holder.itemView.setTag(R.id.tvDescription,boutiqueBean.getId());
-        holder.itemView.setTag(R.id.tvBoutiqueTitle,boutiqueBean.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MFGT.gotoBoutiqueChild(mContext,boutiqueBean);
+            }
+        });
         ImageLoader.downloadImg(mContext, holder.ivBoutique, boutiqueBean.getImageurl());
     }
 
