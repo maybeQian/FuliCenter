@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,14 +66,47 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         mModel.downData(this, goodsId, new OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
+                showGoodsDetail(result);
             }
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(GoodsDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
+    private void showGoodsDetail(GoodsDetailsBean goods) {
+        mtvGoodsEnglishName.setText(goods.getGoodsEnglishName());
+        mtvGoodsName.setText(goods.getGoodsName());
+        mtvGoodsCurrentPrice.setText(goods.getCurrencyPrice());
+        mSalv.startPlayLoop(mIndicator, getAlbumUrl(goods), getAlbumCount(goods));
+        mWebView.loadDataWithBaseURL(null, goods.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
+    }
 
+    private int getAlbumCount(GoodsDetailsBean goods) {
+        if (goods != null && goods.getProperties() != null && goods.getProperties().length > 0) {
+            return goods.getProperties()[0].getAlbums().length;
+        }
+        return 0;
+    }
+
+    private String[] getAlbumUrl(GoodsDetailsBean goods) {
+        if (goods != null && goods.getProperties() != null && goods.getProperties().length > 0) {
+            AlbumsBean[] albums = goods.getProperties()[0].getAlbums();
+            if (albums != null && albums.length > 0) {
+                String[] urls = new String[albums.length];
+                for (int i = 0; i < albums.length; i++) {
+                    urls[i] = albums[i].getImgUrl();
+                }
+                return urls;
+            }
+        }
+        return new String[0];
+    }
+
+    @OnClick(R.id.ivBack)
+    public void onClick() {
+        MFGT.finishActivity(this);
+    }
 
 }
