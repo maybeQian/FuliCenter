@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.controller.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,31 +52,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void sortGoods(final int sortBy) {
-        Collections.sort(mList, new Comparator<NewGoodsBean>() {
-            @Override
-            public int compare(NewGoodsBean leftBean, NewGoodsBean rightBean) {
-                int result=0;
-                switch (sortBy) {
-                    case I.SORT_BY_ADDTIME_ASC:
 
-                        break;
-                    case I.SORT_BY_ADDTIME_DESC:
-
-                        break;
-
-                    case I.SORT_BY_PRICE_ASC:
-
-                        break;
-
-                    case I.SORT_BY_PRICE_DESC:
-
-                        break;
-                }
-                return result;
-            }
-        });
-    }
 
     public NewGoodsAdapter(Context mContext, ArrayList<NewGoodsBean> list) {
         this.mContext = mContext;

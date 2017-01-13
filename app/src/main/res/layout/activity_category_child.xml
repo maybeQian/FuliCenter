@@ -7,12 +7,13 @@
     <RelativeLayout
         android:background="@drawable/tb_btn_login_orange_normal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@id/ivBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/back"/>
         <TextView
             android:id="@+id/tvCategoryTitle"
@@ -24,6 +25,52 @@
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/holo_orange_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSortPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格"
+            android:textSize="18sp"
+            android:background="#0000"
+            android:layout_marginLeft="50dp"
+            />
+        <ImageView
+            android:id="@+id/ivPriceArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_order_down"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/btnSortPrice"
+            android:layout_marginLeft="30dp"
+            />
+
+        <ImageView
+            android:id="@+id/ivAddTimeArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_order_down"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            />
+        <Button
+            android:id="@+id/btnSortAddTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上架时间"
+            android:textSize="18sp"
+            android:background="#0000"
+            android:layout_toLeftOf="@id/ivAddTimeArrow"
+            android:layout_marginRight="50dp"
+            />
+    </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/layout_content"
         android:layout_width="match_parent"

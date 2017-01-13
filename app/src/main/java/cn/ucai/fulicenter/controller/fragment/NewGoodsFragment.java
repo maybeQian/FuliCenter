@@ -165,4 +165,7 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
+
+
+
 }
