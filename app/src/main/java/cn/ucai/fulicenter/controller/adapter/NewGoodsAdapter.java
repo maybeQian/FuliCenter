@@ -52,7 +52,37 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void sortGoods(final int sortBy) {
+        Collections.sort(mList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean leftBean, NewGoodsBean rightBean) {
+                int result=0;
+                switch (sortBy) {
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result= (int) (leftBean.getAddTime()-rightBean.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result= (int) (rightBean.getAddTime()-leftBean.getAddTime());
+                        break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result = parsePrice(leftBean.getCurrencyPrice()) - parsePrice(rightBean.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result = parsePrice(rightBean.getCurrencyPrice()) - parsePrice(leftBean.getCurrencyPrice());
+                        break;
+                }
+                return result;
+            }
+        });
+        notifyDataSetChanged();
+    }
 
+    private int parsePrice(String price) {
+        int p=0;
+        p=Integer.valueOf(price.substring(price.indexOf("￥")+1));
+        Log.i("adapter", "price>>>>>>>" + p);
+        return p;
+    }
 
     public NewGoodsAdapter(Context mContext, ArrayList<NewGoodsBean> list) {
         this.mContext = mContext;

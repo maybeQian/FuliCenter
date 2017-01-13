@@ -57,6 +57,30 @@ public class CategoryChildActivity extends AppCompatActivity {
     public void onClick() {
         MFGT.finishActivity(this);
     }
-
+    @OnClick({R.id.btnSortPrice, R.id.btnSortAddTime})
+    public void onClick(View view) {
+        int sortBy=I.SORT_BY_ADDTIME_DESC;
+        switch (view.getId()) {
+            case R.id.btnSortPrice:
+                if (priceAsc) {
+                    sortBy=I.SORT_BY_PRICE_ASC;
+                } else {
+                    sortBy=I.SORT_BY_PRICE_DESC;
+                }
+                priceAsc=!priceAsc;
+                break;
+            case R.id.btnSortAddTime:
+                if (addTimeAsc) {
+                    sortBy=I.SORT_BY_ADDTIME_ASC;
+                } else {
+                    sortBy=I.SORT_BY_ADDTIME_DESC;
+                }
+                addTimeAsc=!addTimeAsc;
+                break;
+        }
+        mNewGoodsFragment.sortGoods(sortBy);
+        ivPriceArrow.setImageResource(priceAsc?R.drawable.arrow_order_down:R.drawable.arrow_order_up);
+        ivAddTimeArrow.setImageResource(addTimeAsc?R.drawable.arrow_order_down:R.drawable.arrow_order_up);
+    }
 
 }
