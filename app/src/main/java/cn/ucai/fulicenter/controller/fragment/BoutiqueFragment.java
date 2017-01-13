@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.adapter.BoutiqueAdapter;
@@ -44,6 +45,9 @@ public class BoutiqueFragment extends Fragment {
     ArrayList<BoutiqueBean> mList;
     LinearLayoutManager mLayoutManager;
     IModelBoutique mModel;
+    @BindView(R.id.tvLoadMore)
+    TextView mtvLoadMore;
+
     public BoutiqueFragment() {
     }
 
@@ -75,7 +79,7 @@ public class BoutiqueFragment extends Fragment {
     }
 
     private void initData() {
-        mModel=new ModelBoutique();
+        mModel = new ModelBoutique();
         downloadData(I.ACTION_DOWNLOAD);
     }
 
@@ -83,19 +87,25 @@ public class BoutiqueFragment extends Fragment {
         mModel.downData(getContext(), new OnCompleteListener<BoutiqueBean[]>() {
             @Override
             public void onSuccess(BoutiqueBean[] result) {
-                mAdapter.setFooter("没有更多数据...");
-                ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
-                switch (action) {
-                    case I.ACTION_DOWNLOAD:
-                        mAdapter.initData(list);
-                        break;
-                    case I.ACTION_PULL_DOWN:
-                        ImageLoader.release();
-                        mSrl.setRefreshing(false);
-                        mtvRefreshHint.setVisibility(View.GONE);
-                        mAdapter.initData(list);
-                        break;
+                if (result != null && result.length > 0) {
+                    mSrl.setVisibility(View.VISIBLE);
+                    mtvLoadMore.setVisibility(View.GONE);
+                    ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
+                    switch (action) {
+                        case I.ACTION_DOWNLOAD:
+                            mAdapter.initData(list);
+                            break;
+                        case I.ACTION_PULL_DOWN:
+                            ImageLoader.release();
+                            mSrl.setRefreshing(false);
+                            mtvRefreshHint.setVisibility(View.GONE);
+                            mAdapter.initData(list);
+                            break;
 
+                    }
+                } else {
+                    mSrl.setVisibility(View.GONE);
+                    mtvLoadMore.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -113,13 +123,20 @@ public class BoutiqueFragment extends Fragment {
                 getResources().getColor(R.color.google_yellow),
                 getResources().getColor(R.color.google_red)
         );
-        mList=new ArrayList<>();
+        mList = new ArrayList<>();
         mAdapter = new BoutiqueAdapter(getContext(), mList);
         mrvBoutique.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getContext());
         mrvBoutique.setLayoutManager(mLayoutManager);
         mrvBoutique.setHasFixedSize(true);
         mrvBoutique.addItemDecoration(new SpaceItemDecoration(15));
+
+        mSrl.setVisibility(View.GONE);
+        mtvLoadMore.setVisibility(View.GONE);
     }
 
+    @OnClick(R.id.tvLoadMore)
+    public void onClick() {
+        initData();
+    }
 }

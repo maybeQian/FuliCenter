@@ -99,8 +99,7 @@
         <cn.ucai.fulicenter.view.SlideAutoLoopView
             android:id="@+id/salv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/good_detail_bg" />
+            android:layout_height="match_parent" />
         <cn.ucai.fulicenter.view.FlowIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
