@@ -10,10 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.model.bean.NewGoodsBean;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
 import cn.ucai.fulicenter.view.MFGT;
@@ -48,6 +51,31 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void sortGoods(final int sortBy) {
+        Collections.sort(mList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean leftBean, NewGoodsBean rightBean) {
+                int result=0;
+                switch (sortBy) {
+                    case I.SORT_BY_ADDTIME_ASC:
+
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+
+                        break;
+
+                    case I.SORT_BY_PRICE_ASC:
+
+                        break;
+
+                    case I.SORT_BY_PRICE_DESC:
+
+                        break;
+                }
+                return result;
+            }
+        });
+    }
 
     public NewGoodsAdapter(Context mContext, ArrayList<NewGoodsBean> list) {
         this.mContext = mContext;
