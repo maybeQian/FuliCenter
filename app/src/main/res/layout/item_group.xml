@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:layout_marginBottom="5dp">
+    android:layout_height="60dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivGroup"
@@ -11,6 +10,7 @@
         android:layout_height="50dp"
         android:src="@drawable/category_child"
         android:layout_marginLeft="50dp"
+        android:layout_centerVertical="true"
         />
     <TextView
         android:id="@+id/tvGroupName"

@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.controller.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.controller.fragment.CategoryFragment;
 import cn.ucai.fulicenter.controller.fragment.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragments[0]=new NewGoodsFragment();
         fragments[1]=new BoutiqueFragment();
+        fragments[2]=new CategoryFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.layout_content,fragments[0]).show(fragments[0]).commit();
