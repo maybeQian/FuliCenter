@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.model.bean.Result;
+import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelUser;
 import cn.ucai.fulicenter.model.net.ModelUser;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
@@ -81,12 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void register(String userName, String nick, String password) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.registering));
+        dialog.show();
         mModel=new ModelUser();
         mModel.register(this, userName, nick, password, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
                 if (s != null) {
-                    Result result = ResultUtils.getResultFromJson(s, Result.class);
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    Log.i("main", "result="+result);
                     if (result != null) {
                         if (result.isRetMsg()) {
                             CommonUtils.showLongToast(R.string.register_success);
