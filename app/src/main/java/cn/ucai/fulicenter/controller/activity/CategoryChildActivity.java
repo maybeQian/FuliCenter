@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.fragment.NewGoodsFragment;
+import cn.ucai.fulicenter.model.bean.CategoryChildBean;
 import cn.ucai.fulicenter.view.CatFilterButton;
 import cn.ucai.fulicenter.view.MFGT;
 
@@ -46,7 +49,8 @@ public class CategoryChildActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        mbtnCategoryTitle.initCatFilterButton(title,null);
+        ArrayList<CategoryChildBean> list = (ArrayList<CategoryChildBean>) intent.getSerializableExtra(I.CategoryChild.DATA);
+        mbtnCategoryTitle.initCatFilterButton(title,list);
 
         mNewGoodsFragment = new NewGoodsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
