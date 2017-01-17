@@ -2,6 +2,8 @@ package cn.ucai.fulicenter.controller.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,11 +48,28 @@ public class SettingActivity extends AppCompatActivity {
         mtvUsername.setText(user.getMuserName());
         mtvNick.setText(user.getMuserNick());
     }
+
     @OnClick(R.id.btnLogout)
     public void logout() {
         FuliCenterApplication.setUser(null);
         SharePreferenceUtils.getInstance(this).removeUser();
         MFGT.gotoLogin(this);
         finish();
+    }
+
+
+    @OnClick({R.id.ivSettingBack, R.id.layout_user_nick})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ivSettingBack:
+                MFGT.finishActivity(this);
+                break;
+            case R.id.layout_user_nick:
+                String nick = mtvNick.getText().toString().trim();
+                if (TextUtils.isEmpty(nick)) {
+
+                }
+                break;
+        }
     }
 }

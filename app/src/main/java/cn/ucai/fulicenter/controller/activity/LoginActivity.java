@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 SharePreferenceUtils.getInstance(LoginActivity.this).saveUser(user.getMuserName());
                                 FuliCenterApplication.setUser(user);
                                 setResult(RESULT_OK);
+                                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                                 MFGT.finishActivity(LoginActivity.this);
                             }
                         } else {
