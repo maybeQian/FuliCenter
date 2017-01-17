@@ -31,4 +31,8 @@ public class SharePreferenceUtils {
     public String getUser() {
         return preferences.getString(SHARE_PREFERENCE_NAME_USERNAME, null);
     }
+
+    public void removeUser() {
+        preferences.edit().remove(SHARE_PREFERENCE_NAME_USERNAME).commit();
+    }
 }

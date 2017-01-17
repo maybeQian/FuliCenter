@@ -197,19 +197,45 @@
                     android:layout_marginRight="10dp"
                     android:src="@drawable/right_arrow_icon" />
             </LinearLayout>
-            <GridView
-                android:id="@+id/center_user_order_lis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_marginTop="1dp"
-                android:cacheColorHint="#00000000"
-                android:background="#ffffff"
-                android:paddingTop="20dp"
+                android:background="@color/white"
+                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:numColumns="5">
-            </GridView>
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ivOrderList1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/order_list1"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/ivOrderList2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/order_list2"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/ivOrderList3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/order_list3"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/ivOrderList4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/order_list4"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/ivOrderList5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/order_list5"
+                    android:layout_weight="1"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -245,18 +271,22 @@
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/center_card_coupon1" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="生活卷"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:id="@+id/textView" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/center_card_coupon1" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
