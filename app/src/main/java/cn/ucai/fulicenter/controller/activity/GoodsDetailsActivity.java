@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,9 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.FuliCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.model.bean.AlbumsBean;
 import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.model.bean.MessageBean;
+import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelGoodsDetail;
 import cn.ucai.fulicenter.model.net.ModelGoodsDetail;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
@@ -47,6 +52,12 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     int goodsId;
     IModelGoodsDetail mModel;
 
+    boolean isCollect;
+    @BindView(R.id.layout_image)
+    RelativeLayout layoutImage;
+    @BindView(R.id.activity_goods_details)
+    LinearLayout activityGoodsDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +86,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showGoodsDetail(GoodsDetailsBean goods) {
         mtvGoodsEnglishName.setText(goods.getGoodsEnglishName());
         mtvGoodsName.setText(goods.getGoodsName());
@@ -104,9 +116,52 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         return new String[0];
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initCollectStatus();
+    }
+
+    private void initCollectStatus() {
+        User user = FuliCenterApplication.getUser();
+        if (user != null) {
+            mModel.isCollect(this, goodsId, user.getMuserName(), new OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result != null && result.isSuccess()) {
+                        isCollect = true;
+                    } else {
+                        isCollect = false;
+                    }
+                    setCollectStatus();
+                }
+
+                @Override
+                public void onError(String error) {
+                    isCollect = false;
+                    setCollectStatus();
+                }
+            });
+
+        }
+
+    }
+
+    private void setCollectStatus() {
+        if (isCollect) {
+            mivCollect.setImageResource(R.mipmap.bg_collect_out);
+        } else {
+            mivCollect.setImageResource(R.mipmap.bg_collect_in);
+        }
+    }
+
     @OnClick(R.id.ivBack)
     public void onClick() {
         MFGT.finishActivity(this);
     }
 
+    @OnClick(R.id.ivCollect)
+    public void addCollect() {
+
+    }
 }
