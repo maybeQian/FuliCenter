@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/ivSettingBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:src="@drawable/back" />
         <TextView
@@ -39,8 +39,8 @@
             />
         <ImageView
             android:id="@+id/ivRightArrow1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/right"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -69,9 +69,9 @@
             />
         <ImageView
             android:id="@+id/ivRightArrow2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/right_arrow_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/right"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             />
@@ -101,9 +101,9 @@
             />
         <ImageView
             android:id="@+id/ivRightArrow3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/right_arrow_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/right"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             />
