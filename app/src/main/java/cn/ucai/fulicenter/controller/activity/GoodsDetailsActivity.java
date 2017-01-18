@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.controller.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelGoodsDetail;
 import cn.ucai.fulicenter.model.net.ModelGoodsDetail;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
+import cn.ucai.fulicenter.model.utils.CommonUtils;
 import cn.ucai.fulicenter.view.FlowIndicator;
 import cn.ucai.fulicenter.view.MFGT;
 import cn.ucai.fulicenter.view.SlideAutoLoopView;
@@ -161,7 +163,34 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.ivCollect)
-    public void addCollect() {
-
+    public void setCollectListener() {
+        User user=FuliCenterApplication.getUser();
+        if (user != null) {
+            setCollect(user);
+        } else {
+            MFGT.gotoLogin(this);
+        }
     }
+
+    private void setCollect(User user) {
+        mModel.setCollect(this, goodsId, user.getMuserName(),
+                isCollect ? I.ACTION_DELETE_COLLECT : I.ACTION_ADD_COLLECT, new OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            isCollect=!isCollect;
+                            setCollectStatus();
+                            CommonUtils.showShortToast(result.getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showLongToast(error);
+                        Log.e("main", "setCollect,error=" + error);
+                    }
+                });
+    }
+
+
 }

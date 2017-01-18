@@ -46,8 +46,6 @@ public class PersonalCenterFragment extends Fragment {
         User user = FuliCenterApplication.getUser();
         if (user != null) {
             loadUserInfo(user);
-        } else {
-            MFGT.gotoLogin(getActivity());
         }
     }
 

@@ -31,5 +31,19 @@ public class ModelGoodsDetail implements IModelGoodsDetail {
                 .execute(listener);
     }
 
+    @Override
+    public void setCollect(Context context, int goodsId, String username, int action, OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        String url=I.REQUEST_ADD_COLLECT;
+        if (action == I.ACTION_DELETE_COLLECT) {
+            url=I.REQUEST_DELETE_COLLECT;
+        }
+        utils.setRequestUrl(url)
+                .addParam(I.GoodsDetails.KEY_GOODS_ID, String.valueOf(goodsId))
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
 
 }
