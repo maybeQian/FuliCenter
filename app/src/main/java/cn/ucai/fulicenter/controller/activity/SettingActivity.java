@@ -19,6 +19,7 @@ import cn.ucai.fulicenter.application.FuliCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.model.bean.Result;
 import cn.ucai.fulicenter.model.bean.User;
+import cn.ucai.fulicenter.model.dao.UserDao;
 import cn.ucai.fulicenter.model.net.IModelUser;
 import cn.ucai.fulicenter.model.net.ModelUser;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
@@ -132,6 +133,8 @@ public class SettingActivity extends AppCompatActivity {
                             if (result != null) {
                                 if (result.isRetMsg()) {
                                     msg=R.string.update_user_avatar_success;
+                                    User user= (User) result.getRetData();
+                                    saveUser(user);
                                 }
                             }
                         }
@@ -146,6 +149,11 @@ public class SettingActivity extends AppCompatActivity {
                         Log.e("main", "uploadAvatar,error=" + error);
                     }
                 });
+    }
+
+    private void saveUser(User user) {
+        FuliCenterApplication.setUser(user);
+        UserDao.getInstance().saveUser(user);
     }
 
 
