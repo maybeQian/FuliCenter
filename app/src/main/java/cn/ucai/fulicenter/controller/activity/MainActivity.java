@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rbCart:
                 index = 3;
+                if (FuliCenterApplication.getUser() == null) {
+                    MFGT.gotoLogin(this);
+                } else {
+                    index = 3;
+                }
                 break;
             case R.id.rbPersonal:
                 if (FuliCenterApplication.getUser() == null) {
@@ -121,10 +126,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_LOGIN) {
-            index=4;
-            setFragment();
-            setRadioStatus();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                index=3;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                index=4;
+
+            }
         }
+        setFragment();
+        setRadioStatus();
     }
 }

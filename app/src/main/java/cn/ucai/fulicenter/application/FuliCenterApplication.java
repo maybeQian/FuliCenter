@@ -2,6 +2,9 @@ package cn.ucai.fulicenter.application;
 
 import android.app.Application;
 
+import java.util.HashMap;
+
+import cn.ucai.fulicenter.model.bean.CartBean;
 import cn.ucai.fulicenter.model.bean.User;
 
 /**
@@ -19,6 +22,7 @@ public class FuliCenterApplication extends Application {
         super.onCreate();
         instance=this;
     }
+
 
     private static User user;
 

@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.controller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,7 +22,9 @@ import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.model.bean.MessageBean;
 import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelGoodsDetail;
+import cn.ucai.fulicenter.model.net.IModelUser;
 import cn.ucai.fulicenter.model.net.ModelGoodsDetail;
+import cn.ucai.fulicenter.model.net.ModelUser;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
 import cn.ucai.fulicenter.model.utils.CommonUtils;
 import cn.ucai.fulicenter.view.FlowIndicator;
@@ -54,6 +57,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     int goodsId;
     IModelGoodsDetail mModel;
 
+    IModelUser mModelUser;
     boolean isCollect;
     @BindView(R.id.layout_image)
     RelativeLayout layoutImage;
@@ -164,7 +168,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.ivCollect)
     public void setCollectListener() {
-        User user=FuliCenterApplication.getUser();
+        User user = FuliCenterApplication.getUser();
         if (user != null) {
             setCollect(user);
         } else {
@@ -178,9 +182,10 @@ public class GoodsDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(MessageBean result) {
                         if (result != null && result.isSuccess()) {
-                            isCollect=!isCollect;
+                            isCollect = !isCollect;
                             setCollectStatus();
                             CommonUtils.showShortToast(result.getMsg());
+                            sendBroadcast(new Intent(I.BROADCAST_UPDATA_COLLECT).putExtra(I.Collect.GOODS_ID, goodsId));
                         }
                     }
 
@@ -193,4 +198,22 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.ivCart)
+    public void addCart() {
+        User user=FuliCenterApplication.getUser();
+        mModelUser=new ModelUser();
+        mModelUser.addCart(this, user.getMuserName(), goodsId, 1, new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null && result.isSuccess()) {
+                    CommonUtils.showLongToast(R.string.add_goods_success);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
 }

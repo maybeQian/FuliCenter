@@ -1,5 +1,9 @@
 package cn.ucai.fulicenter.controller.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +51,7 @@ public class CollectsActivity extends AppCompatActivity {
     User user;
     IModelUser mModel;
     int mPageId;
+    UpdateCollectsReceiver mReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +64,21 @@ public class CollectsActivity extends AppCompatActivity {
             initView();
             initData();
             setListener();
+            registerMyReceiver();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
+    private void registerMyReceiver() {
+        mReceiver=new UpdateCollectsReceiver();
+        IntentFilter filter=new IntentFilter(I.BROADCAST_UPDATA_COLLECT);
+        registerReceiver(mReceiver, filter);
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        initData();
+//    }
 
     private void setListener() {
         setPullDownListener();
@@ -169,5 +181,21 @@ public class CollectsActivity extends AppCompatActivity {
     @OnClick(R.id.ivSettingBack)
     public void onClick() {
         MFGT.finishActivity(this);
+    }
+
+    class UpdateCollectsReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int goodsId = intent.getIntExtra(I.Collect.GOODS_ID, 0);
+            mAdapter.removeItem(goodsId);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+        }
     }
 }

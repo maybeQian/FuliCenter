@@ -117,6 +117,12 @@ public class CollectsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void removeItem(int goodsId) {
+        if (goodsId != 0) {
+            mList.remove(new CollectBean(goodsId));
+            notifyDataSetChanged();
+        }
+    }
 
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
