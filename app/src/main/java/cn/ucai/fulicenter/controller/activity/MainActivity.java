@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuliCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.controller.fragment.CartFragment;
 import cn.ucai.fulicenter.controller.fragment.CategoryFragment;
 import cn.ucai.fulicenter.controller.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.controller.fragment.PersonalCenterFragment;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         fragments[0]=new NewGoodsFragment();
         fragments[1]=new BoutiqueFragment();
         fragments[2]=new CategoryFragment();
+        fragments[3]=new CartFragment();
         fragments[4]=new PersonalCenterFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.layout_content,fragments[0]).show(fragments[0]).commit();
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rbCart:
                 index = 3;
                 if (FuliCenterApplication.getUser() == null) {
-                    MFGT.gotoLogin(this);
+                    MFGT.gotoLogin(this,I.REQUEST_CODE_LOGIN_FROM_CART);
                 } else {
                     index = 3;
                 }
