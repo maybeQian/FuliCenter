@@ -1,7 +1,6 @@
 package cn.ucai.fulicenter.controller.fragment;
 
 
-import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,6 +36,7 @@ public class PersonalCenterFragment extends Fragment {
     TextView mtvCollectCount;
 
     IModelUser mModel;
+
     public PersonalCenterFragment() {
     }
 
@@ -70,7 +70,7 @@ public class PersonalCenterFragment extends Fragment {
     }
 
     private void loadCollectCount() {
-        mModel=new ModelUser();
+        mModel = new ModelUser();
         mModel.getCollectCount(getContext(), FuliCenterApplication.getUser().getMuserName(), new OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
@@ -89,9 +89,13 @@ public class PersonalCenterFragment extends Fragment {
     }
 
 
-
     @OnClick({R.id.tv_center_settings, R.id.center_user_info})
     public void onClick() {
         MFGT.gotoSetting(getActivity());
+    }
+
+    @OnClick(R.id.layout_center_collect)
+    public void getCollects() {
+        MFGT.gotoCollects(getActivity());
     }
 }

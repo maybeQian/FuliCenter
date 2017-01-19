@@ -106,8 +106,9 @@ public class SettingActivity extends AppCompatActivity {
             mtvNick.setText(FuliCenterApplication.getUser().getMuserNick());
         } else if (requestCode == OnSetAvatarListener.REQUEST_CROP_PHOTO) {
             uploadAvatar();
+        } else {
+            mOnSetAvatarListener.setAvatar(requestCode,data,mivAvatar);
         }
-        mOnSetAvatarListener.setAvatar(requestCode,data,mivAvatar);
     }
 
     private void uploadAvatar() {
@@ -116,8 +117,8 @@ public class SettingActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.update_user_avatar));
         dialog.show();
         File file = new File(String.valueOf(OnSetAvatarListener.getAvatarFile(this,
-                OnSetAvatarListener.getAvatarPath(this,
-                        "/" + user.getMuserName() + user.getMavatarSuffix()))));
+                "/"+user.getMavatarPath()+"/"+user.getMuserName()+user.getMavatarSuffix()
+                )));
         Log.e("main", "uploadAvatar,file=>>>>>>>>>" + file.getAbsolutePath());
         mModel=new ModelUser();
         mModel.uploadAvatar(this,
@@ -133,8 +134,6 @@ public class SettingActivity extends AppCompatActivity {
                             if (result != null) {
                                 if (result.isRetMsg()) {
                                     msg=R.string.update_user_avatar_success;
-                                    User user= (User) result.getRetData();
-                                    saveUser(user);
                                 }
                             }
                         }
@@ -151,10 +150,7 @@ public class SettingActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveUser(User user) {
-        FuliCenterApplication.setUser(user);
-        UserDao.getInstance().saveUser(user);
-    }
+
 
 
 }
