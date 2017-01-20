@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 index = 2;
                 break;
             case R.id.rbCart:
-                index = 3;
                 if (FuliCenterApplication.getUser() == null) {
                     MFGT.gotoLogin(this,I.REQUEST_CODE_LOGIN_FROM_CART);
                 } else {
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         if (!fragment.isAdded()) {
             ft.add(R.id.layout_content, fragment);
         }
-        ft.show(fragment).hide(fragments[currentIndex]).commit();
+        ft.hide(fragments[currentIndex]).show(fragment).commit();
     }
 
     private void setRadioStatus() {
@@ -120,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 + index + ",user=" + FuliCenterApplication.getUser());
         if (index == 4 && FuliCenterApplication.getUser() == null) {
             index=0;
-            setFragment();
         }
+        setFragment();
         setRadioStatus();
     }
 
