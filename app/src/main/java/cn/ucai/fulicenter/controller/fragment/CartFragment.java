@@ -1,11 +1,16 @@
 package cn.ucai.fulicenter.controller.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +28,7 @@ import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.controller.adapter.BoutiqueAdapter;
 import cn.ucai.fulicenter.controller.adapter.CartAdapter;
 import cn.ucai.fulicenter.model.bean.CartBean;
+import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelUser;
 import cn.ucai.fulicenter.model.net.ModelUser;
@@ -53,10 +59,11 @@ public class CartFragment extends Fragment {
     TextView mtvCartSavePrice;
 
     CartAdapter mAdapter;
-    ArrayList<CartBean> mList;
+    ArrayList<CartBean> mList=new ArrayList<>();
     LinearLayoutManager mLayoutManager;
     IModelUser mModel;
     User user;
+    UpdateCartReceiver mReceiver;
     public CartFragment() {
     }
 
@@ -69,7 +76,20 @@ public class CartFragment extends Fragment {
         initView();
         initData(I.ACTION_DOWNLOAD);
         setListener();
+        registerMyReceiver();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData(I.ACTION_DOWNLOAD);
+    }
+
+    private void registerMyReceiver() {
+        mReceiver=new UpdateCartReceiver();
+        IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATA_CART);
+        getActivity().registerReceiver(mReceiver, filter);
     }
 
     private void setListener() {
@@ -93,6 +113,7 @@ public class CartFragment extends Fragment {
                     if (result != null && result.length > 0) {
                         mtvNothing.setVisibility(View.GONE);
                         ArrayList<CartBean> list = ConvertUtils.array2List(result);
+                        mList.addAll(list);
                         switch (action) {
                             case I.ACTION_DOWNLOAD:
                                 mAdapter.initData(list);
@@ -122,7 +143,6 @@ public class CartFragment extends Fragment {
                 getResources().getColor(R.color.google_yellow),
                 getResources().getColor(R.color.google_red)
         );
-        mList = new ArrayList<>();
         mAdapter = new CartAdapter(getContext(), mList);
         mrv.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -131,4 +151,38 @@ public class CartFragment extends Fragment {
         mrv.addItemDecoration(new SpaceItemDecoration(15));
     }
 
+    private void setPrice() {
+        int sumPrice=0;
+        int savePrice=0;
+        if (mList != null && mList.size() > 0) {
+            for (CartBean cartBean : mList) {
+                GoodsDetailsBean goods = cartBean.getGoods();
+                if (cartBean.isChecked() && goods != null) {
+                    sumPrice += cartBean.getCount() * parsePrice(goods.getCurrencyPrice());
+                    savePrice += cartBean.getCount() * (parsePrice(goods.getCurrencyPrice())-parsePrice(goods.getRankPrice()));
+                }
+            }
+        }
+        mtvCartSumPrice.setText(sumPrice+"");
+        mtvCartSavePrice.setText(savePrice+"");
+        mAdapter.notifyDataSetChanged();
+    }
+    int parsePrice(String price) {
+        int p=0;
+        p=Integer.valueOf(price.substring(price.indexOf("￥")+1));
+        return p;
+    }
+
+    class UpdateCartReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setPrice();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mReceiver);
+    }
 }
