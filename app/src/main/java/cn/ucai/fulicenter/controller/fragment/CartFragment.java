@@ -10,22 +10,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuliCenterApplication;
 import cn.ucai.fulicenter.application.I;
-import cn.ucai.fulicenter.controller.adapter.BoutiqueAdapter;
 import cn.ucai.fulicenter.controller.adapter.CartAdapter;
 import cn.ucai.fulicenter.model.bean.CartBean;
 import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
@@ -33,6 +30,7 @@ import cn.ucai.fulicenter.model.bean.User;
 import cn.ucai.fulicenter.model.net.IModelUser;
 import cn.ucai.fulicenter.model.net.ModelUser;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
+import cn.ucai.fulicenter.model.utils.CommonUtils;
 import cn.ucai.fulicenter.model.utils.ConvertUtils;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
 import cn.ucai.fulicenter.view.SpaceItemDecoration;
@@ -59,11 +57,13 @@ public class CartFragment extends Fragment {
     TextView mtvCartSavePrice;
 
     CartAdapter mAdapter;
-    ArrayList<CartBean> mList=new ArrayList<>();
+    ArrayList<CartBean> mList = new ArrayList<>();
     LinearLayoutManager mLayoutManager;
     IModelUser mModel;
     User user;
     UpdateCartReceiver mReceiver;
+    int sumPrice;
+
     public CartFragment() {
     }
 
@@ -87,7 +87,7 @@ public class CartFragment extends Fragment {
     }
 
     private void registerMyReceiver() {
-        mReceiver=new UpdateCartReceiver();
+        mReceiver = new UpdateCartReceiver();
         IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATA_CART);
         getActivity().registerReceiver(mReceiver, filter);
     }
@@ -104,8 +104,8 @@ public class CartFragment extends Fragment {
     }
 
     private void initData(final int action) {
-        user=FuliCenterApplication.getUser();
-        mModel=new ModelUser();
+        user = FuliCenterApplication.getUser();
+        mModel = new ModelUser();
         if (user != null) {
             mModel.getCart(getContext(), user.getMuserName(), new OnCompleteListener<CartBean[]>() {
                 @Override
@@ -152,25 +152,35 @@ public class CartFragment extends Fragment {
     }
 
     private void setPrice() {
-        int sumPrice=0;
-        int savePrice=0;
+        sumPrice = 0;
+        int savePrice = 0;
         if (mList != null && mList.size() > 0) {
             for (CartBean cartBean : mList) {
                 GoodsDetailsBean goods = cartBean.getGoods();
                 if (cartBean.isChecked() && goods != null) {
                     sumPrice += cartBean.getCount() * parsePrice(goods.getCurrencyPrice());
-                    savePrice += cartBean.getCount() * (parsePrice(goods.getCurrencyPrice())-parsePrice(goods.getRankPrice()));
+                    savePrice += cartBean.getCount() * (parsePrice(goods.getCurrencyPrice()) - parsePrice(goods.getRankPrice()));
                 }
             }
         }
-        mtvCartSumPrice.setText(sumPrice+"");
-        mtvCartSavePrice.setText(savePrice+"");
+        mtvCartSumPrice.setText(sumPrice + "");
+        mtvCartSavePrice.setText(savePrice + "");
         mAdapter.notifyDataSetChanged();
     }
+
     int parsePrice(String price) {
-        int p=0;
-        p=Integer.valueOf(price.substring(price.indexOf("￥")+1));
+        int p = 0;
+        p = Integer.valueOf(price.substring(price.indexOf("￥") + 1));
         return p;
+    }
+
+    @OnClick(R.id.tv_cart_buy)
+    public void onOrderClick() {
+        if (sumPrice > 0) {
+
+        } else {
+            CommonUtils.showLongToast(R.string.order_nothing);
+        }
     }
 
     class UpdateCartReceiver extends BroadcastReceiver {
