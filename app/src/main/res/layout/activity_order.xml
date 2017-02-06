@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/ivSettingBack"
@@ -19,113 +19,112 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="填写收获地址"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/textView2" />
+            android:layout_centerVertical="true"
+            android:text="填写收获地址"
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:background="@color/white"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="收货人:"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            />
+            android:text="收货人:"
+            android:textSize="18sp" />
+
         <EditText
             android:id="@+id/etReceiver"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="张三"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            />
+            android:text="张三"
+            android:textSize="18sp" />
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:background="@color/white"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手机号码:"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            />
+            android:text="手机号码:"
+            android:textSize="18sp" />
+
         <EditText
             android:id="@+id/etPhoneNumber"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1232"
-            android:textSize="20sp"
-            android:inputType="phone"
             android:layout_gravity="center_vertical"
-            />
+            android:inputType="phone"
+            android:text="1232"
+            android:textSize="18sp" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:background="@color/white">
+
         <TextView
             android:id="@+id/tvArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="所在地区:"
-            android:textSize="20sp"
             android:layout_centerVertical="true"
-            />
+            android:text="所在地区:"
+            android:textSize="18sp" />
+
         <Spinner
-            android:layout_toRightOf="@id/tvArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:entries="@array/area"
-            />
+            android:layout_toRightOf="@id/tvArea"
+            android:entries="@array/area" />
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:background="@color/white"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="街道地址:"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            />
+            android:text="街道地址:"
+            android:textSize="18sp" />
+
         <EditText
             android:id="@+id/etStreet"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="大街"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            />
+            android:text="东街"
+            android:textSize="18sp" />
     </LinearLayout>
+
     <RelativeLayout
-        android:id="@+id/layout_cart"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:background="@color/white">
+
         <TextView
-            android:id="@+id/tv_cart_buy"
+            android:id="@+id/tv_order_buy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -135,17 +134,18 @@
             android:paddingRight="30dp"
             android:text="提交订单"
             android:textColor="@color/white"
-            android:textSize="20sp" />
-            <TextView
-                android:id="@+id/tv_cart_sum_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/tv_cart_buy"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:text="合计:  ￥0"
-                android:textColor="#f90"
-                android:textSize="20sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/tv_order_buy"
+            android:text="合计: ￥0"
+            android:textColor="#f90"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

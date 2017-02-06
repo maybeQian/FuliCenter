@@ -33,6 +33,7 @@ import cn.ucai.fulicenter.model.net.OnCompleteListener;
 import cn.ucai.fulicenter.model.utils.CommonUtils;
 import cn.ucai.fulicenter.model.utils.ConvertUtils;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
+import cn.ucai.fulicenter.view.MFGT;
 import cn.ucai.fulicenter.view.SpaceItemDecoration;
 
 /**
@@ -63,7 +64,7 @@ public class CartFragment extends Fragment {
     User user;
     UpdateCartReceiver mReceiver;
     int sumPrice;
-
+    int payPrice;
     public CartFragment() {
     }
 
@@ -153,6 +154,7 @@ public class CartFragment extends Fragment {
 
     private void setPrice() {
         sumPrice = 0;
+        payPrice=0;
         int savePrice = 0;
         if (mList != null && mList.size() > 0) {
             for (CartBean cartBean : mList) {
@@ -163,6 +165,7 @@ public class CartFragment extends Fragment {
                 }
             }
         }
+        payPrice=sumPrice-savePrice;
         mtvCartSumPrice.setText(sumPrice + "");
         mtvCartSavePrice.setText(savePrice + "");
         mAdapter.notifyDataSetChanged();
@@ -177,7 +180,7 @@ public class CartFragment extends Fragment {
     @OnClick(R.id.tv_cart_buy)
     public void onOrderClick() {
         if (sumPrice > 0) {
-
+            MFGT.gotoOrder(getActivity(), payPrice);
         } else {
             CommonUtils.showLongToast(R.string.order_nothing);
         }
