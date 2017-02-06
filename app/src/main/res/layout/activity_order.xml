@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:text="张蛋"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -67,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:inputType="phone"
+            android:text="12345678901"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -111,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:text="东大街"
             android:textSize="18sp" />
     </LinearLayout>
 
